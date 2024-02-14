@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>VL Energy PEMS CO2 Prediction Dashboard</title>
+
+    <!-- Montserrat Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+  </head>
+  <body>
+    <div class="grid-container">
+
+        <!-- Header -->
+      <header class="header">
+        <div class="menu-icon" onclick="openSidebar()">
+          <span class="material-icons-outlined">menu</span>
+        </div>
+        <div class="header-left">
+          <span class="material-icons-outlined">search</span>
+        </div>
+        <div class="header-right">
+          <span class="material-icons-outlined">notifications</span>
+          <span class="material-icons-outlined">email</span>
+          <span class="material-icons-outlined">account_circle</span>
+        </div>
+      </header>
+      <!-- End Header -->
+
+      <!-- Sidebar -->
+      <aside id="sidebar">
+        <div class="sidebar-title">
+          <div class="sidebar-brand">
+            <img id="logo" src="./image/Logo.png" href="https://www.vlenergy.ca" alt="Logo"> VL Energy
+          </div>
+          <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+        </div>
+
+        <ul class="sidebar-list">
+
+          <li class="sidebar-list-item">
+            <a href="https://vlenergy.ca/" target="_blank">
+               Company Website
+            </a>
+          </li>
+
+          <li>
+
+          <li style="margin-left:1em; margin-top:4px;font-size: 18px;"> Cogeneration
+          <li class="sidebar-list-item">
+            <a href="index.html" target="_self">
+              <span class="material-icons-outlined">dashboard</span> Overview
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <a href="#" target="_self">
+              <span class="material-icons-outlined">inventory_2</span> NOx
+
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <a href="flowrate.html" target="_self">
+                <span class="material-icons-outlined">trending_down</span>Flow Rate
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <a href="temp.html" target="_self">
+              <span class="material-icons-outlined">device_thermostat</span> Temperature
+            </a>
+          </li>
+
+          <li class="sidebar-list-item">
+            <a href="CO2.html" target="_self">
+              <span class="material-icons-outlined">device_thermostat</span> CO2
+            </a>
+          </li>
+
+          </li>
+
+          </li>
+
+          <li style="margin-left:1em; margin-top:4px;font-size: 18px;"> OTSG
+
+          <li class="sidebar-list-item">
+            <a href="OTSG.html" target="_self">
+                <span class="material-icons-outlined">data_thresholding</span> OTSG
+            </a>
+          </li>
+          </li>
+
+          <li style="margin-left:1em; margin-top:4px;font-size: 18px;"> Turbine
+    
+            <li class="sidebar-list-item">
+              <a href="turbine.html" target="_self">
+                  <span class="material-icons-outlined">data_thresholding</span> NOx
+              </a>
+            </li>
+          </li>
+
+
+
+          
+
+          
+          </li>
+        </ul>
+      </aside>
+      <!-- End Sidebar -->
+
+      <!-- Main -->
+      <main class="main-container">
+        <div class="main-title">
+          <h2>Cogeneration CO2 Prediction</h2>
+        
+
+        <div class="main-cards">
+
+          <div class="card">
+            <div class="card-inner">
+              <h3>Mean Value</h3>
+              <span class="material-icons-outlined">inventory_2</span>
+            </div>
+            <h1 id="mean">0</h1>
+          </div>
+
+          <div class="card">
+            <div class="card-inner">
+              <h3>Minimum Value</h3>
+              <span class="material-icons-outlined">category</span>
+            </div>
+            <h1 id="min">0</h1>
+          </div>
+
+
+          <div class="card">
+            <div class="card-inner">
+              <h3>Maximum Value</h3>
+              <span class="material-icons-outlined">groups</span>
+            </div>
+            <h1 id="max">0</h1>
+          </div>
+
+
+        </div>
+        </div>
+
+        
+
+
+
+
+
+
+
+        
+          <div class="container">
+            <img src="./image/COGENERATION.png" alt="">
+            <div class="all-tooltip">
+
+
+              <div class=" tooltip tooltip-co2-1">
+                <div class="pin">
+                  <ion-icon name="add-circle"></ion-icon>
+                </div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>vibration of gas turbine bearing  (T5)</h1>
+                    <div id="coordinates1" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-co2-t5vibration"></div>
+
+ 
+                    <button id="btn-co2-t5vibration">Check the Data</button>
+
+        
+                  </div>
+                </div>
+              </div>
+              
+              <div class="tooltip tooltip-co2-2">
+                <div class="pin"></div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>vibration of gas turbine bearing  (T2)</h1>
+                    <div id="coordinates2" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-co2-t2vibration"></div>
+                    <button id="btn-co2-t2vibration">Check the Data</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tooltip tooltip-co2-3">
+                <div class="pin"></div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>vibration of gas turbine bearing  (T3)</h1>
+                    <div id="coordinates3" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-co2-t3vibration"></div>
+                    <button id="btn-co2-t3vibration">Check the Data</button>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="tooltip tooltip-co2-4">
+                <div class="pin"></div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>met temperature of gas turbine bearing_A</h1>
+                    <div id="coordinates4" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-co2-metTempA"></div>
+                    <button id="btn-co2-metTempA">Check the Data</button>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+
+              <div class="tooltip tooltip-co2-5">
+                <div class="pin"></div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>met temperature of gas turbine bearing_B</h1>
+                    <div id="coordinates5" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-co2-metTempB"></div>
+                    <button id="btn-co2-metTempB">Check the Data</button>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="tooltip tooltip-co2-6">
+                <div class="pin"></div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>thrust act temperature of gas turbine bearing</h1>
+                    <div id="coordinates6" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-co2-thrustTemp"></div>
+                    <button id="btn-co2-thrustTemp">Check the Data</button>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="tooltip tooltip-co2-7">
+                <div class="pin"></div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>radial sensor vibration of gas turbine bearing (2X)</h1>
+                    <div id="coordinates7" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-radial2x"></div>
+                    <button id="btn-radial2x">Check the Data</button>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="tooltip tooltip-co2-8">
+                <div class="pin"></div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>radial sensor vibration of gas turbine bearing (3X)</h1>
+                    <div id="coordinates8" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-radial3x"></div>
+                    <button id="btn-radial3x">Check the Data</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tooltip tooltip-co2-9">
+                <div class="pin"></div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>radial sensor vibration of gas turbine bearing (3Y)</h1>
+                    <div id="coordinates9" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-radial3y"></div>
+                    <button id="btn-radial3y">Check the Data</button>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="tooltip tooltip-co2-10">
+                <div class="pin"></div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>exhaust temperature of gas turbine</h1>
+                    <div id="coordinates10" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-exhaustTemp_co2"></div>
+                    <button id="btn-exhaustTemp_co2">Check the Data</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tooltip tooltip-co2-11">
+                <div class="pin"></div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>quality of steam leaves radiant chamber_A</h1>
+                    <div id="coordinates11" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-qualityA"></div>
+                    <button id="btn-qualityA">Check the Data</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tooltip tooltip-co2-12">
+                <div class="pin"></div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>fuel gas flow rate to duct burner</h1>
+                    <div id="coordinates12" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-fuelGas_co2"></div>
+                    <button id="btn-fuelGas_co2">Check the Data</button>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="tooltip tooltip-co2-13">
+                <div class="pin"></div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>gas valve fuel gas flow of gas turbine</h1>
+                    <div id="coordinates13" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-gasValve"></div>
+                    <button id="btn-gasValve">Check the Data</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tooltip tooltip-co2-14">
+                <div class="pin"></div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>quality of steam leaves radiant chamber_B</h1>
+                    <div id="coordinates14" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-qualityB"></div>
+                    <button id="btn-qualityB">Check the Data</button>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="tooltip tooltip-co2-15">
+                <div class="pin"></div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>HRSG boiler feedwater inlet temperature</h1>
+                    <div id="coordinates15" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-hrsgBoiler"></div>
+                    <button id="btn-hrsgBoiler">Check the Data</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tooltip tooltip-co2-16">
+                <div class="pin"></div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>inlet filter differential pressure of gas turbine</h1>
+                    <div id="coordinates16" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-inletFilter"></div>
+                    <button id="btn-inletFilter">Check the Data</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tooltip tooltip-co2-17">
+                <div class="pin"></div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>radiant chamber temperature of economizer</h1>
+                    <div id="coordinates17" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-radiantChamber"></div>
+                    <button id="btn-radiantChamber">Check the Data</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tooltip tooltip-co2-18">
+                <div class="pin"></div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>CO2</h1>
+                    <div id="coordinates18" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-co2"></div>
+                    <button id="btn-co2">Check the Data</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> 
+    </div>
+
+    <!-- Scripts -->
+    <!-- ApexCharts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.5/apexcharts.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/script.js"></script>
+    <script src="js/co2/chart-CO2.js"></script>
+    <script src="js/co2/chart-HRSGboilerfeedwaterinlettemperature.js"></script>
+    <script src="js/co2/chart-exhausttemperatureofgasturbine.js"></script>
+    <script src="js/co2/chart-fuelgasflowratetoductburner.js"></script>
+    <script src="js/co2/chart-gasvalvefuelgasflowofgasturbine.js"></script>
+    <script src="js/co2/chart-inletfilterdifferentialpressureofgasturbine.js"></script>
+    <script src="js/co2/chart-mettemperatureofgasturbinebearing_A.js"></script>
+    <script src="js/co2/chart-mettemperatureofgasturbinebearing_B.js"></script>
+
+    <script src="js/co2/chart-qualityofsteamleavesradiantchamber_A.js"></script>
+    <script src="js/co2/chart-qualityofsteamleavesradiantchamber_B.js"></script>
+    <script src="js/co2/chart-radialsensorvibrationofgasturbinebearing(2X).js"></script>
+    <script src="js/co2/chart-radialsensorvibrationofgasturbinebearing(3X).js"></script>
+    <script src="js/co2/chart-radialsensorvibrationofgasturbinebearing(3Y).js"></script>
+    <script src="js/co2/chart-radiantchambertemperatureofeconomizer.js"></script>
+    <script src="js/co2/chart-thrustacttemperatureofgasturbinebearing.js"></script>
+    <script src="js/co2/chart-vibrationofgasturbinebearing(T2).js"></script>
+
+    <script src="js/co2/chart-vibrationofgasturbinebearing(T3).js"></script>
+    <script src="js/co2/chart-vibrationofgasturbinebearing(T5).js"></script>
+  </body>
+  </body>
+</html>

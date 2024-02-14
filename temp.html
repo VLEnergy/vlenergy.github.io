@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>VL Energy PEMS Temperature Prediction Dashboard</title>
+
+    <!-- Montserrat Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+  </head>
+  <body>
+    <div class="grid-container">
+
+        <!-- Header -->
+      <header class="header">
+        <div class="menu-icon" onclick="openSidebar()">
+          <span class="material-icons-outlined">menu</span>
+        </div>
+        <div class="header-left">
+          <span class="material-icons-outlined">search</span>
+        </div>
+        <div class="header-right">
+          <span class="material-icons-outlined">notifications</span>
+          <span class="material-icons-outlined">email</span>
+          <span class="material-icons-outlined">account_circle</span>
+        </div>
+      </header>
+      <!-- End Header -->
+
+      <!-- Sidebar -->
+      <aside id="sidebar">
+        <div class="sidebar-title">
+          <div class="sidebar-brand">
+            <img id="logo" src="./image/Logo.png" href="https://www.vlenergy.ca" alt="Logo"> VL Energy
+          </div>
+          <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+        </div>
+
+        <ul class="sidebar-list">
+          <li class="sidebar-list-item">
+            <a href="https://vlenergy.ca/" target="_blank">
+             Company Website
+            </a>
+          </li>
+
+          <li style="margin-left:1em; margin-top:4px;font-size: 18px;"> Cogeneration
+
+          <li class="sidebar-list-item">
+            <a href="index.html" target="_self">
+              <span class="material-icons-outlined">dashboard</span> Overview
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <a href="nox.html" target="_self">
+              <span class="material-icons-outlined">inventory_2</span> NOx
+
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <a href="flowrate.html" target="_self">
+                <span class="material-icons-outlined">trending_down</span>Flow Rate
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <a href="#" target="_self">
+              <span class="material-icons-outlined">device_thermostat</span> Temperature
+            </a>
+          </li>
+
+
+          <li class="sidebar-list-item">
+            <a href="CO2.html" target="_self">
+              <span class="material-icons-outlined">device_thermostat</span> CO2
+            </a>
+          </li>
+
+          </li>
+          <li style="margin-left:1em; margin-top:4px;font-size: 18px;"> OTSG
+
+          <li class="sidebar-list-item">
+            <a href="OTSG.html" target="_self">
+                <span class="material-icons-outlined">data_thresholding</span> NOx
+            </a>
+          </li>
+          </li>
+
+          <li style="margin-left:1em; margin-top:4px;font-size: 18px;"> Turbine
+    
+            <li class="sidebar-list-item">
+              <a href="turbine.html" target="_self">
+                  <span class="material-icons-outlined">data_thresholding</span> NOx
+              </a>
+            </li>
+          </li>
+          
+
+          
+        </ul>
+      </aside>
+      <!-- End Sidebar -->
+
+      <!-- Main -->
+      <main class="main-container">
+        <div class="main-title">
+          <h2>Cogeneration Temperature Prediction</h2>
+          
+        
+
+        <div class="main-cards">
+
+          <div class="card">
+            <div class="card-inner">
+              <h3>Mean Value</h3>
+              <span class="material-icons-outlined">inventory_2</span>
+            </div>
+            <h1 id="mean">0</h1>
+          </div>
+
+          <div class="card">
+            <div class="card-inner">
+              <h3>Minimum Value</h3>
+              <span class="material-icons-outlined">category</span>
+            </div>
+            <h1 id="min">0</h1>
+          </div>
+
+
+          <div class="card">
+            <div class="card-inner">
+              <h3>Maximum Value</h3>
+              <span class="material-icons-outlined">groups</span>
+            </div>
+            <h1 id="max">0</h1>
+          </div>
+
+        </div>
+
+        </div>
+
+        
+
+
+
+
+
+
+
+        
+          <div class="container">
+            <img src="./image/COGENERATION.png" alt="">
+            <div class="all-tooltip">
+
+
+              <div class=" tooltip tooltip-temp-1">
+                <div class="pin">
+                  <ion-icon name="add-circle"></ion-icon>
+                </div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>Fuel Gas Flow Rate to Duct Burners</h1>
+                    <div id="coordinates1" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-temp-fuelGasFlowRate"></div>
+                    <button id="btn-temp-fuelGasFlowRate">Check the Data</button>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="tooltip tooltip-temp-2">
+                <div class="pin"></div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>Steam to Steam Header Temperature</h1>
+                    <div id="coordinates2" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-temp-headerTemp"></div>
+                    <button id="btn-temp-headerTemp">Check the Data</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tooltip tooltip-temp-3">
+                <div class="pin"></div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>Exhaust Temperature of  Gas Turbine</h1>
+                    <div id="coordinates3" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-temp-exhaustTempGasTurbine"></div>
+                    <button id="btn-temp-exhaustTempGasTurbine">Check the Data</button>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="tooltip tooltip-temp-4">
+                <div class="pin"></div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>Economizer Chamber Temperature</h1>
+                    <div id="coordinates4" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-temp-chamberTemp"></div>
+                    <button id="btn-temp-chamberTemp">Check the Data</button>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+
+              <div class="tooltip tooltip-temp-5">
+                <div class="pin"></div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>Gas Turbine Vibration</h1>
+                    <div id="coordinates5" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-temp-vibration"></div>
+                    <button id="btn-temp-vibration">Check the Data</button>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="tooltip tooltip-temp-6">
+                <div class="pin"></div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>Relative Humidity</h1>
+                    <div id="coordinates6" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-temp-humidity"></div>
+                    <button id="btn-temp-humidity">Check the Data</button>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="tooltip tooltip-temp-7">
+                <div class="pin"></div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>Gas Turbine Compressor Pressure Ratio</h1>
+                    <div id="coordinates7" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-temp-turbineCompressorPressureRatio"></div>
+                    <button id="btn-temp-turbineCompressorPressureRatio">Check the Data</button>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="tooltip tooltip-temp-8">
+                <div class="pin"></div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>Temperature</h1>
+                    <div id="coordinates8" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-temp"></div>
+                    <button id="btn-temp">Check the Data</button>
+                  </div>
+                </div>
+              </div>
+
+
+
+            </div>
+          </div>
+        
+    </div>
+
+    <!-- Scripts -->
+    <!-- ApexCharts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.5/apexcharts.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/script.js"></script>
+    <script src="js/temperature/fuelGasFlowRate.js"></script>
+    <script src="js/temperature/exhaustTempGasTurbine.js"></script>
+    <script src="js/temperature/economizerChamberTemp.js"></script>
+    <script src="js/temperature/humidity.js"></script>
+    <script src="js/temperature/turbineCompressorPressorRatio.js"></script>
+    <script src="js/temperature/turbineVibration.js"></script>
+    <script src="js/temperature/headerTemperature.js"></script>
+    <script src="js/temperature/chart-temp.js"></script>
+  </body>
+</html>
