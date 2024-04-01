@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>VL Energy PEMS Flow Rate Prediction Dashboard</title>
+    
+
+    <!-- Montserrat Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+  </head>
+  <body>
+    <div class="grid-container">
+
+        <!-- Header -->
+      <header class="header">
+        <div class="menu-icon" onclick="openSidebar()">
+          <span class="material-icons-outlined">menu</span>
+        </div>
+        <div class="header-left">
+          <span class="material-icons-outlined">search</span>
+        </div>
+        <div class="header-right">
+          <span class="material-icons-outlined">notifications</span>
+          <span class="material-icons-outlined">email</span>
+          <span class="material-icons-outlined">account_circle</span>
+        </div>
+      </header>
+      <!-- End Header -->
+
+      <!-- Sidebar -->
+      <aside id="sidebar">
+        <div class="sidebar-title">
+          <div class="sidebar-brand">
+            <img id="logo" src="./image/Logo.png" href="https://www.vlenergy.ca" alt="Logo"> VL Energy
+          </div>
+          <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+
+
+        </div>
+
+        
+
+        <ul class="sidebar-list">
+
+          
+            
+            
+
+              <li class="sidebar-list-item">
+                <a href="https://vlenergy.ca/" target="_blank">
+                  Company Website
+                </a>
+              </li>
+
+
+              <li style="margin-left:1em; margin-top:4px;font-size: 18px;"> Cogeneration
+                
+
+                <li class="sidebar-list-item">
+                  <a href="index.html" target="_self">
+                    <span class="material-icons-outlined">dashboard</span> Overview
+                  </a>
+                </li>
+
+               <li class="sidebar-list-item">
+                  <a href="nox.html" target="_self">
+                    <span class="material-icons-outlined">inventory_2</span> NOx
+    
+                  </a>
+               </li>
+
+                <li class="sidebar-list-item">
+                  <a href="#" target="_self">
+                      <span class="material-icons-outlined">trending_down</span> FlowRate
+                  </a>
+                </li>
+
+                <li class="sidebar-list-item">
+                  <a href="temp.html" target="_self">
+                    <span class="material-icons-outlined">device_thermostat</span> Temperature
+                  </a>
+                </li>
+                <li class="sidebar-list-item">
+                  <a href="CO2.html" target="_self">
+                    <span class="material-icons-outlined">device_thermostat</span> CO2
+                  </a>
+                </li>
+
+              </li>
+
+              <li style="margin-left:1em; margin-top:4px;font-size: 18px;"> OTSG
+    
+                <li class="sidebar-list-item">
+                  <a href="OTSG.html" target="_self">
+                      <span class="material-icons-outlined">data_thresholding</span> NOx
+                  </a>
+                </li>
+              </li>
+
+
+              <li style="margin-left:1em; margin-top:4px;font-size: 18px;"> Turbine
+    
+                <li class="sidebar-list-item">
+                  <a href="turbine.html" target="_self">
+                      <span class="material-icons-outlined">data_thresholding</span> NOx
+                  </a>
+                </li>
+              </li>
+
+            
+          
+
+
+          
+
+          
+
+          
+        </ul>
+      </aside>
+      <!-- End Sidebar -->
+
+      <!-- Main -->
+      <main class="main-container">
+        <div class="main-title">
+          <h2>Turbine NOx Prediction</h2>
+        
+
+        <div class="main-cards">
+
+          <div class="card">
+            <div class="card-inner">
+              <h3>Mean Value</h3>
+              <span class="material-icons-outlined">inventory_2</span>
+            </div>
+            <h1 id="mean">0</h1>
+          </div>
+
+          <div class="card">
+            <div class="card-inner">
+              <h3>Minimum Value</h3>
+              <span class="material-icons-outlined">category</span>
+            </div>
+            <h1 id="min">0</h1>
+          </div>
+
+
+          <div class="card">
+            <div class="card-inner">
+              <h3>Maximum Value</h3>
+              <span class="material-icons-outlined">groups</span>
+            </div>
+            <h1 id="max">0</h1>
+          </div>
+
+
+        </div>
+
+        </div>
+
+
+
+          <div class="container">
+            <img src="./image/Gas Turbine.png" alt="" width="400" height="100"/>
+            <div class="all-tooltip">
+
+
+              <div class=" tooltip tooltip-turbine-1">
+                <div class="pin">
+                  <ion-icon name="add-circle"></ion-icon>
+                </div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>Air Inlet Temperature</h1>
+                    <div id="coordinates1" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-T1_Temperature"></div>
+                    <div id="tooltip"></div>
+
+                    <button id="btn-T1_Temperature">Check the Data</button>
+                    <div id="text-container"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class=" tooltip tooltip-turbine-2">
+                <div class="pin">
+                  <ion-icon name="add-circle"></ion-icon>
+                </div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>Gas Producer Speed Set Point</h1>
+                    <div id="coordinates2" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-Ngp_SP"></div>
+
+                    <button id="btn-Ngp_SP">Check the Data</button>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class=" tooltip tooltip-turbine-3">
+                <div class="pin">
+                  <ion-icon name="add-circle"></ion-icon>
+                </div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>Guide Vane Actuator Position Feedback</h1>
+                    <div id="coordinates3" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-Guide_Vane_Position"></div>
+
+                    <button id="btn-Guide_Vane_Position">Check the Data</button>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class=" tooltip tooltip-turbine-4">
+                <div class="pin">
+                  <ion-icon name="add-circle"></ion-icon>
+                </div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>Generator Kw Set Point</h1>
+                    <div id="coordinates4" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-Gen_kW_SP"></div>
+
+                    <button id="btn-Gen_kW_SP">Check the Data</button>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class=" tooltip tooltip-turbine-5">
+                <div class="pin">
+                  <ion-icon name="add-circle"></ion-icon>
+                </div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>Lube Oil Header Temperature</h1>
+                    <div id="coordinates5" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-Lube_Oil_Header_Temp"></div>
+
+                    <button id="btn-Lube_Oil_Header_Temp">Check the Data</button>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class=" tooltip tooltip-turbine-6">
+                <div class="pin">
+                  <ion-icon name="add-circle"></ion-icon>
+                </div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>Lube Oil Header Pressure</h1>
+                    <div id="coordinates6" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-Lube_Oil_Header_Press"></div>
+
+                    <button id="btn-Lube_Oil_Header_Press">Check the Data</button>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class=" tooltip tooltip-turbine-7">
+                <div class="pin">
+                  <ion-icon name="add-circle"></ion-icon>
+                </div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>Generator Excitation Voltage</h1>
+                    <div id="coordinates7" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-Gen_Exc_V"></div>
+
+                    <button id="btn-Gen_Exc_V">Check the Data</button>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class=" tooltip tooltip-turbine-8">
+                <div class="pin">
+                  <ion-icon name="add-circle"></ion-icon>
+                </div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>Guide Vane Actuator Force</h1>
+                    <div id="coordinates8" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-Guide_Vane_Force"></div>
+
+                    <button id="btn-Guide_Vane_Force">Check the Data</button>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class=" tooltip tooltip-turbine-9">
+                <div class="pin">
+                  <ion-icon name="add-circle"></ion-icon>
+                </div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>Gas Fuel Supply Pressure</h1>
+                    <div id="coordinates9" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-Gas_Fuel_Press"></div>
+
+                    <button id="btn-Gas_Fuel_Press">Check the Data</button>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class=" tooltip tooltip-turbine-10">
+                <div class="pin">
+                  <ion-icon name="add-circle"></ion-icon>
+                </div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>Generator Auto Voltage Regulation Set Point</h1>
+                    <div id="coordinates10" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-Gen_AVR_SP"></div>
+
+                    <button id="btn-Gen_AVR_SP">Check the Data</button>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class=" tooltip tooltip-turbine-11">
+                <div class="pin">
+                  <ion-icon name="add-circle"></ion-icon>
+                </div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>SoLoNox Control T5 Set Point</h1>
+                    <div id="coordinates11" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-SoloNox_T5_SP"></div>
+
+                    <button id="btn-SoloNox_T5_SP">Check the Data</button>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class=" tooltip tooltip-turbine-12">
+                <div class="pin">
+                  <ion-icon name="add-circle"></ion-icon>
+                </div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>Gas Fuel Flow</h1>
+                    <div id="coordinates12" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-Gas_Fuel_Flow"></div>
+
+                    <button id="btn-Gas_Fuel_Flow">Check the Data</button>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div class=" tooltip tooltip-turbine-13">
+                <div class="pin">
+                  <ion-icon name="add-circle"></ion-icon>
+                </div>
+                <div class="tooltip-content">
+                  <div class="arrow"></div>
+                  <div class="content">
+                    <h1>Main Gas Fuel Valve Position Feedback</h1>
+                    <div id="coordinates13" style="position: absolute; top: 10px; left: 10px;"></div>
+                    <div id="chart-container-Main_Gas_Valve_Position"></div>
+
+                    <button id="btn-Main_Gas_Valve_Position">Check the Data</button>
+
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+
+
+
+
+
+
+        
+          
+          
+       
+    </div>
+
+    <!-- Scripts -->
+    <!-- ApexCharts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.5/apexcharts.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/script.js"></script>
+    <script src="js/turbine/chart-T1_Temperature.js"></script>
+    <script src="js/turbine/chart-Ngp_SP.js"></script>
+    <script src="js/turbine/chart-Guide_Vane_Position.js"></script>
+    <script src="js/turbine/chart-Gen_kW_SP.js"></script>
+    <script src="js/turbine/chart-Lube_Oil_Header_Temp.js"></script>
+    <script src="js/turbine/chart-Lube_Oil_Header_Press.js"></script>
+    <script src="js/turbine/chart-Gen_Exc_V.js"></script>
+    <script src="js/turbine/chart-Guide_Vane_Force.js"></script>
+    <script src="js/turbine/chart-Gas_Fuel_Press.js"></script>
+    <script src="js/turbine/chart-Gen_AVR_SP.js"></script>
+    <script src="js/turbine/chart-SoloNox_T5_SP.js"></script>
+    <script src="js/turbine/chart-Gas_Fuel_Flow.js"></script>
+    <script src="js/turbine/chart-Main_Gas_Valve_Position.js"></script>
+    
+  </body>
+</html>
